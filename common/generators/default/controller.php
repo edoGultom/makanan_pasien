@@ -1,11 +1,42 @@
 <?php
+/**
+ * This is the template for generating a CRUD controller class file.
+ */
 
-namespace frontend\controllers;
+use yii\helpers\StringHelper;
+use yii\db\ActiveRecordInterface;
+
+
+/* @var $this yii\web\View */
+/* @var $generator yii\gii\generators\crud\Generator */
+
+$controllerClass = StringHelper::basename($generator->controllerClass);
+$modelClass = StringHelper::basename($generator->modelClass);
+$searchModelClass = StringHelper::basename($generator->searchModelClass);
+if ($modelClass === $searchModelClass) {
+    $searchModelAlias = $searchModelClass . 'Search';
+}
+
+/* @var $class ActiveRecordInterface */
+$class = $generator->modelClass;
+$pks = $class::primaryKey();
+$urlParams = $generator->generateUrlParams();
+$actionParams = $generator->generateActionParams();
+$actionParamComments = $generator->generateActionParamComments();
+
+echo "<?php\n";
+?>
+
+namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
 use Yii;
-use common\models\TaPasien;
-use frontend\models\PasienSearch;
-use yii\web\Controller;
+use <?= ltrim($generator->modelClass, '\\') ?>;
+<?php if (!empty($generator->searchModelClass)): ?>
+use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
+<?php else: ?>
+use yii\data\ActiveDataProvider;
+<?php endif; ?>
+use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use \yii\web\Response;
@@ -14,9 +45,9 @@ use yii\helpers\ArrayHelper;
 
 
 /**
- * PasienController implements the CRUD actions for TaPasien model.
+ * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
-class PasienController extends Controller
+class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
     /**
      * @inheritdoc
@@ -35,48 +66,58 @@ class PasienController extends Controller
     }
 
     /**
-     * Lists all TaPasien models.
+     * Lists all <?= $modelClass ?> models.
      * @return mixed
      */
     public function actionIndex()
     {    
-        $searchModel = new PasienSearch();
+       <?php if (!empty($generator->searchModelClass)): ?>
+ $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+<?php else: ?>
+        $dataProvider = new ActiveDataProvider([
+            'query' => <?= $modelClass ?>::find(),
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+<?php endif; ?>
     }
 
 
     /**
-     * Displays a single TaPasien model.
-     * @param integer $id
+     * Displays a single <?= $modelClass ?> model.
+     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView(<?= $actionParams ?>)
     {   
         $request = Yii::$app->request;
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'title'=> "TaPasien ",
+                    'title'=> "<?= $modelClass ?> ",
                     'content'=>$this->renderAjax('view', [
-                        'model' => $this->findModel($id),
+                        'model' => $this->findModel(<?= $actionParams ?>),
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                            Html::a('Ubah',['update','id' => $id_pasien],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('Ubah',['update',<?= str_replace('$model->','$',$urlParams) ?>],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
         }else{
             return $this->render('view', [
-                'model' => $this->findModel($id),
+                'model' => $this->findModel(<?= $actionParams ?>),
             ]);
         }
     }
 
     /**
-     * Creates a new TaPasien model.
+     * Creates a new <?= $modelClass ?> model.
      * For ajax request will return json object
      * and for non-ajax request if creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -84,7 +125,7 @@ class PasienController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new TaPasien();  
+        $model = new <?= $modelClass ?>();  
 
         if($request->isAjax){
             /*
@@ -93,7 +134,7 @@ class PasienController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Tambah TaPasien",
+                    'title'=> "Tambah <?= $modelClass ?>",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -104,15 +145,15 @@ class PasienController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "Tambah TaPasien",
-                    'content'=>'<span class="text-success">Create TaPasien berhasil</span>',
+                    'title'=> "Tambah <?= $modelClass ?>",
+                    'content'=>'<span class="text-success">Create <?= $modelClass ?> berhasil</span>',
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
                             Html::a('Tambah Lagi',['create'],['class'=>'btn btn-primary','role'=>'modal-remote'])
         
                 ];         
             }else{           
                 return [
-                    'title'=> "Tambah TaPasien",
+                    'title'=> "Tambah <?= $modelClass ?>",
                     'content'=>$this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -126,7 +167,7 @@ class PasienController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id_pasien]);
+                return $this->redirect(['view', <?= $urlParams ?>]);
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -137,16 +178,16 @@ class PasienController extends Controller
     }
 
     /**
-     * Updates an existing TaPasien model.
+     * Updates an existing <?= $modelClass ?> model.
      * For ajax request will return json object
      * and for non-ajax request if update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate(<?= $actionParams ?>)
     {
         $request = Yii::$app->request;
-        $model = $this->findModel($id);       
+        $model = $this->findModel(<?= $actionParams ?>);       
 
         if($request->isAjax){
             /*
@@ -155,7 +196,7 @@ class PasienController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'title'=> "Ubah TaPasien",
+                    'title'=> "Ubah <?= $modelClass ?>",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -165,16 +206,16 @@ class PasienController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'forceReload'=>'#crud-datatable-pjax',
-                    'title'=> "TaPasien ",
+                    'title'=> "<?= $modelClass ?> ",
                     'content'=>$this->renderAjax('view', [
                         'model' => $model,
                     ]),
                     'footer'=> Html::button('Tutup',['class'=>'btn btn-default float-left','data-dismiss'=>"modal"]).
-                            Html::a('Ubah',['update', 'id' => $model->id_pasien],['class'=>'btn btn-primary','role'=>'modal-remote'])
+                            Html::a('Ubah',['update', <?= $urlParams ?>],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
                  return [
-                    'title'=> "Ubah TaPasien ",
+                    'title'=> "Ubah <?= $modelClass ?> ",
                     'content'=>$this->renderAjax('update', [
                         'model' => $model,
                     ]),
@@ -187,7 +228,7 @@ class PasienController extends Controller
             *   Process for non-ajax request
             */
             if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id_pasien]);
+                return $this->redirect(['view', <?= $urlParams ?>]);
             } else {
                 return $this->render('update', [
                     'model' => $model,
@@ -197,16 +238,16 @@ class PasienController extends Controller
     }
 
     /**
-     * Delete an existing TaPasien model.
+     * Delete an existing <?= $modelClass ?> model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete(<?= $actionParams ?>)
     {
         $request = Yii::$app->request;
-        $this->findModel($id)->delete();
+        $this->findModel(<?= $actionParams ?>)->delete();
 
         if($request->isAjax){
             /*
@@ -225,10 +266,10 @@ class PasienController extends Controller
     }
 
      /**
-     * Delete multiple existing TaPasien model.
+     * Delete multiple existing <?= $modelClass ?> model.
      * For ajax request will return json object
      * and for non-ajax request if deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
      * @return mixed
      */
     public function actionBulkdelete()
@@ -256,15 +297,26 @@ class PasienController extends Controller
     }
 
     /**
-     * Finds the TaPasien model based on its primary key value.
+     * Finds the <?= $modelClass ?> model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return TaPasien the loaded model
+     * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
+     * @return <?=                   $modelClass ?> the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel(<?= $actionParams ?>)
     {
-        if (($model = TaPasien::findOne($id)) !== null) {
+<?php
+if (count($pks) === 1) {
+    $condition = '$id';
+} else {
+    $condition = [];
+    foreach ($pks as $pk) {
+        $condition[] = "'$pk' => \$$pk";
+    }
+    $condition = '[' . implode(', ', $condition) . ']';
+}
+?>
+        if (($model = <?= $modelClass ?>::findOne(<?= $condition ?>)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

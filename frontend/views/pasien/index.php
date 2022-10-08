@@ -12,21 +12,16 @@ use johnitvn\ajaxcrud\BulkButtonWidget;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title =
-    ' Data Pasien';
+    'Ta Pasien';
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
 
 ?>
-<!-- <div class="element-wrapper">
-    <h6 class="element-header">
-            </h6>
-    <div class="element-box"> -->
 <section class="section">
     <div class="section-header ">
         <h1 class="mr-5">
             <?= $this->title ?>
-
         </h1>
         <div>
             <?= Html::a(
@@ -35,11 +30,10 @@ CrudAsset::register($this);
                 ['class' => 'btn btn-success font-weight-normal', 'role' => 'modal-remote']
             ) ?>
         </div>
-
     </div>
 </section>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-12">
         <div id="ajaxCrudDatatable">
             <div id="table-responsive">
                 <?= GridView::widget([
@@ -56,7 +50,7 @@ CrudAsset::register($this);
                         [
                             'content' =>
                             Html::a(
-                                '<i class="fa fa-repeat"></i> ',
+                                '<i class="glyphicon glyphicon-repeat"></i> ',
                                 [''],
                                 ['data-pjax' => 1, 'class' => 'btn btn-default', 'title' => 'Reset Grid']
                             ) .
@@ -74,6 +68,7 @@ CrudAsset::register($this);
             </div>
         </div>
     </div>
+</div>
 </div>
 <?php Modal::begin([
     "id" => "ajaxCrudModal",

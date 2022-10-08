@@ -18,7 +18,6 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap4\Modal;
 use kartik\grid\GridView;
-/* use johnitvn\ajaxcrud\CrudAsset; */
 use frontend\assets\CrudAsset;
 use johnitvn\ajaxcrud\BulkButtonWidget;
 
@@ -48,7 +47,7 @@ CrudAsset::register($this);
     </div>
 </section>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-12">
         <div id="ajaxCrudDatatable">
             <div id="table-responsive">
                 <?= "<?=" ?>GridView::widget([
@@ -63,7 +62,7 @@ CrudAsset::register($this);
                 'columns' => require(__DIR__.'/_columns.php'),
                 'toolbar'=> [
                 ['content'=>
-                Html::a('<i class="fa fa-repeat"></i> ', [''],
+                Html::a('<i class="glyphicon glyphicon-repeat"></i> ', [''],
                 ['data-pjax'=>1, 'class'=>'btn btn-default', 'title'=>'Reset Grid']).
                 '{toggleData}'
                 // .'{export}'
@@ -73,12 +72,13 @@ CrudAsset::register($this);
                 'condensed' => true,
                 'responsive' => true,
                 'panel' => [
-                'before'=> "",
+                'before'=>"",
                 ]
                 ])<?= "?>\n" ?>
             </div>
         </div>
     </div>
+</div>
 </div>
 <?= '<?php Modal::begin([
     "id"=>"ajaxCrudModal",

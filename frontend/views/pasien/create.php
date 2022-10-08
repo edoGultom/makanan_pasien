@@ -7,8 +7,16 @@ use yii\helpers\Html;
 /* @var $model common\models\TaPasien */
 
 ?>
-<div class="ta-pasien-create">
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+<div class="row">
+    <div class="col-md-12">
+		<div class="card">
+			<div class="card-body">
+                <div class="ta-pasien-create">
+                    <?= $this->render('_form', [
+                        'model' => $model,
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

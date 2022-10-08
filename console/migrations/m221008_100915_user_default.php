@@ -25,7 +25,7 @@ class m221008_100915_user_default extends Migration
                 'updated_at',
             ],
             [
-                ['admin', 'g3DLJxWabCdhoSaSvxngMZQRaKCyGp-R', '$2y$13$Clc9JQGx2F84o.2gdqMpheCpTH1ylhNKK6IIbxXS.LH6IjlhP9HgW', null, 'admin@g.co.id', '10', time(), time()],
+                ['admin', 'g3DLJxWabCdhoSaSvxngMZQRaKCyGp-R', '$2y$10$ezLA5fcIaFDEbWi5axvKQekLW019TmVL1dgpoLPTtEGCNzX7bHPO6', null, 'admin@g.co.id', '10', time(), time()],
             ]
         );
     }

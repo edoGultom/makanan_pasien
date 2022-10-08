@@ -27,6 +27,9 @@ class m221008_101532_auth_assignment extends Migration
                 [
                     '/*', 2, NULL, NULL, NULL, time(), time()
                 ],
+                [
+                    '/pengguna/*', 2, NULL, NULL, NULL, time(), time()
+                ],
 
                 [
                     'Admin', 1, NULL, NULL, NULL, time(), time()

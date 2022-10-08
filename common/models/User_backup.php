@@ -51,22 +51,11 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public $akses;
-    public $nama;
-    public $alamat;
-    public $no_telp;
     public function rules()
     {
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
-            [['akses', 'nama', 'alamat', 'no_telp'], 'safe'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => 'common\models\User', 'message' => 'Username ini sudah dipakai.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
-            ['email', 'required'],
-            ['email', 'unique', 'targetClass' => 'common\models\User', 'message' => 'Username ini sudah dipakai.'],
-            ['email', 'string', 'min' => 2, 'max' => 255],
         ];
     }
 
@@ -221,10 +210,5 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
-    }
-
-    public function getHakAkses()
-    {
-        return AuthAssignment::find()->where(['user_id' => $this->id])->one()->item_name;
     }
 }

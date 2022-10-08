@@ -1,5 +1,7 @@
 <?php
 return [
+    'language' => 'id-ID',
+    'timeZone' => 'Asia/Jakarta',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',

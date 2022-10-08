@@ -14,14 +14,21 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
-            'enableCsrfValidation' => false,
             'class' => 'common\components\Request',
             'web' => '/frontend/web',
         ],
+        'formatter' => [
+            'dateFormat' => 'dd-MM-Y',
+            'class' => 'yii\i18n\Formatter',
+            'nullDisplay' => '-',
+        ],
         'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => false,
+            // 'identityClass' => 'common\models\User',
+            'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+
+            'identityClass' => 'mdm\admin\models\User',
+            'loginUrl' => ['site/login'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
@@ -44,29 +51,26 @@ return [
             'showScriptName' => false,
             'rules' => [],
         ],
-        'formatter' => [
-            'dateFormat' => 'dd-MM-Y',
-            'class' => 'yii\i18n\Formatter',
-            'nullDisplay' => '-',
-        ],
+
         'assetManager' => [
-            'bundles' => [
-                'kartik\form\ActiveFormAsset' => [
-                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
-                ],
-                // 'yii\web\JqueryAsset' => [
-                //     'js' => []
-                // ],
-            ]
+            // 'bundles' => [
+            //     'kartik\form\ActiveFormAsset' => [
+            //         'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+            //     ],
+
+            // ]
+            'appendTimestamp' => true,
         ],
-        'as access' => [
-            'class' => 'common\components\AccessControl',
-            'allowActions' => [
-                'site/*',
-                'gii/*',
-                'debug/*',
-            ]
-        ],
+
+
+    ],
+    'as access' => [
+        'class' => 'common\components\AccessControl',
+        'allowActions' => [
+            'site/*',
+            'gii/*',
+            'debug/*',
+        ]
     ],
     'params' => $params,
 ];

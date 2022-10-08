@@ -60,7 +60,7 @@ class SignupForm extends Model
 
         if ($user->save()) {
             $model_auth = new AuthAssignment;
-            $model_auth->item_name = 'ASN';
+            $model_auth->item_name = 'Admin';
             $model_auth->user_id = $user->id;
             $model_auth->created_at = time();
             $model_auth->save(false);

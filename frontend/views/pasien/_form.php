@@ -37,7 +37,7 @@ use yii\bootstrap4\ActiveForm;
         <div class="col-md-4">
             <?=
             $form->field($model, 'waktu_makan')->dropDownList(
-                ['pagi' => 'Pagi', 'siang' => 'Siang', 'malam', 'Malam'],
+                ['pagi' => 'Pagi', 'siang' => 'Siang', 'malam' => 'Malam'],
             )->label('Nama Dokumen'); ?>
         </div>
         <div class="col-md-8">

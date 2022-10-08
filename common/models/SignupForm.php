@@ -48,33 +48,25 @@ class SignupForm extends Model
      */
     public function signup()
     {
-        // var_dump($this->nip);exit;
-        // if (!$this->validate()) {
-        //     // return $this->errors; //menampilkan error validate input
-        //     return null;
-        // }
-        $model_datautama = DataUtama::find()->where(['nip_baru' => $this->nip])->one();
-
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        // $user->generateEmailVerificationToken();
-        // return $user->save() && $this->sendEmail($user);
-        $user->nip = $model_datautama->nip_baru;
-        $user->id_orang = $model_datautama->id;
-        // $user->opd_id = $model_datautama->unor;
-        $user->opd_cepat_kode = $model_datautama->cepat_kode;
         $user->status = 10;
-        // $user->opd_cabdis_id = $model_datautama->opd_id;
-        // $user->opd_cabdis_cepat_kode = $model_datautama->opd_id;
-        // echo "<pre>", var_dump($user) ,"</pre>";exit;
+
+
+
+
         if ($user->save()) {
+            $model_auth = new AuthAssignment;
+            $model_auth->item_name = 'ASN';
+            $model_auth->user_id = $user->id;
+            $model_auth->created_at = time();
+            $model_auth->save(false);
             return $user;
         }
     }
-
     /**
      * Sends confirmation email to user
      * @param User $user user model to with email should be send

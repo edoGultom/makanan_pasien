@@ -9,6 +9,9 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // only support DbManager
+        ],
     ],
     'modules' => [
         'gii' => [
@@ -19,6 +22,7 @@ return [
                 ]
             ]
         ],
+
         'gridview' =>  [
             'class' => '\kartik\grid\Module'
         ],

@@ -74,6 +74,73 @@ class PenggunaController extends Controller
             ]);
         }
     }
+    public function actionDelete($id)
+    {
+        $request = Yii::$app->request;
+        $this->findModel($id)->delete();
+
+        if ($request->isAjax) {
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose' => true, 'forceReload' => '#crud-datatable-pjax'];
+        } else {
+            /*
+            *   Process for non-ajax request
+            */
+            return $this->redirect(['index']);
+        }
+    }
+    public function actionUpdate($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);
+
+        if ($request->isAjax) {
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($request->isGet) {
+                return [
+                    'title' => "Ubah User",
+                    'content' => $this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
+                        Html::button('Simpan', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
+            } else if ($model->load($request->post()) && $model->save(false)) {
+                return [
+                    'forceReload' => '#crud-datatable-pjax',
+                    'title' => "Informasi ",
+                    'content' => "<div class'bg-success'>Pembuatan akun berhasil</div>",
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"])
+                ];
+            } else {
+                return [
+                    'title' => "Ubah User ",
+                    'content' => $this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
+                        Html::button('Simpan', ['class' => 'btn btn-primary', 'type' => "submit"])
+                ];
+            }
+        } else {
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }
+    }
 
     public function actionCreate()
     {
@@ -95,7 +162,15 @@ class PenggunaController extends Controller
                         Html::button('Simpan', ['class' => 'btn btn-primary', 'type' => "submit"])
 
                 ];
-            } else if ($model->load($request->post()) && $model->save()) {
+            } else if ($model->load($request->post()) && $model->validate()) {
+                if ($model->signup()) {
+                    return [
+                        'forceReload' => '#crud-datatable-pjax',
+                        'title' => "Informasi ",
+                        'content' => "<div class'bg-success'>Pembuatan akun berhasil</div>",
+                        'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"])
+                    ];
+                }
                 return [
                     'forceReload' => '#crud-datatable-pjax',
                     'title' => "Tambah Baru RefPerspektif",

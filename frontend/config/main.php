@@ -59,6 +59,14 @@ return [
                 // ],
             ]
         ],
+        'as access' => [
+            'class' => 'common\components\AccessControl',
+            'allowActions' => [
+                'site/*',
+                'gii/*',
+                'debug/*',
+            ]
+        ],
     ],
     'params' => $params,
 ];

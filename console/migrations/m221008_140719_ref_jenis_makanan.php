@@ -25,10 +25,10 @@ class m221008_140719_ref_jenis_makanan extends Migration
                 'kode',
             ],
             [
-                ['Makanan Pokok (MP)', 'MP'],
-                ['Lauk Hewani (LH)', 'LH'],
-                ['Lauk Nabati (LN)', 'LN'],
-                ['Sayuran (S)', 'S'],
+                ['Makanan Pokok', 'MP'],
+                ['Lauk Hewani', 'LH'],
+                ['Lauk Nabati', 'LN'],
+                ['Sayuran', 'S'],
             ]
         );
     }

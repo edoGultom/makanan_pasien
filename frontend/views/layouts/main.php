@@ -24,6 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
     <?php $this->head() ?>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-175557358-1"></script>
 

@@ -18,8 +18,13 @@ use yii\widgets\DetailView;
                         'attributes' => [
                                         'id_pasien',
             'nama:ntext',
-            'skor_sisa_makanan',
-            'keterangan',
+            'no_rm',
+            'tgl_lahir',
+            'tgl_audit',
+            'waktu_makan',
+            'siklus:ntext',
+            'jenis_diet:ntext',
+            'ruangan:ntext',
                         ],
                     ]) ?>
                     </div>

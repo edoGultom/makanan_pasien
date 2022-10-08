@@ -20,8 +20,13 @@ class m221008_045239_table_pasien extends Migration
         $this->createTable('{{%ta_pasien}}', [
             'id_pasien' => $this->primaryKey(),
             'nama' => $this->text(),
-            'skor_sisa_makanan' => $this->tinyInteger(),
-            'keterangan' => $this->string(255),
+            'no_rm' => $this->string(25),
+            'tgl_lahir' => $this->date(),
+            'tgl_audit' => $this->date(),
+            'waktu_makan' => $this->string(),
+            'siklus' => $this->text(),
+            'jenis_diet' => $this->text(),
+            'ruangan' => $this->text(),
         ], $tableOptions);
     }
 

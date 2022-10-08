@@ -19,7 +19,7 @@ class PasienSearch extends TaPasien
     {
         return [
             [['id_pasien'], 'integer'],
-            [['nama', 'skor_sisa_makanan', 'keterangan'], 'safe'],
+            [['nama', 'no_rm', 'tgl_lahir', 'tgl_audit', 'waktu_makan', 'siklus', 'jenis_diet', 'ruangan'], 'safe'],
         ];
     }
 
@@ -57,11 +57,16 @@ class PasienSearch extends TaPasien
 
         $query->andFilterWhere([
             'id_pasien' => $this->id_pasien,
+            'tgl_lahir' => $this->tgl_lahir,
+            'tgl_audit' => $this->tgl_audit,
         ]);
 
         $query->andFilterWhere(['like', 'nama', $this->nama])
-            ->andFilterWhere(['like', 'skor_sisa_makanan', $this->skor_sisa_makanan])
-            ->andFilterWhere(['like', 'keterangan', $this->keterangan]);
+            ->andFilterWhere(['like', 'no_rm', $this->no_rm])
+            ->andFilterWhere(['like', 'waktu_makan', $this->waktu_makan])
+            ->andFilterWhere(['like', 'siklus', $this->siklus])
+            ->andFilterWhere(['like', 'jenis_diet', $this->jenis_diet])
+            ->andFilterWhere(['like', 'ruangan', $this->ruangan]);
 
         return $dataProvider;
     }

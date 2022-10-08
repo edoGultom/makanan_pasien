@@ -9,8 +9,13 @@ use Yii;
  *
  * @property int $id_pasien
  * @property string|null $nama
- * @property int|null $skor_sisa_makanan
- * @property string|null $keterangan
+ * @property string|null $no_rm
+ * @property string|null $tgl_lahir
+ * @property string|null $tgl_audit
+ * @property string|null $waktu_makan
+ * @property string|null $siklus
+ * @property string|null $jenis_diet
+ * @property string|null $ruangan
  */
 class TaPasien extends \yii\db\ActiveRecord
 {
@@ -28,9 +33,10 @@ class TaPasien extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama'], 'string'],
-            [['skor_sisa_makanan'], 'integer'],
-            [['keterangan'], 'string', 'max' => 255],
+            [['nama', 'siklus', 'jenis_diet', 'ruangan'], 'string'],
+            [['tgl_lahir', 'tgl_audit'], 'safe'],
+            [['no_rm'], 'string', 'max' => 25],
+            [['waktu_makan'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,8 +48,13 @@ class TaPasien extends \yii\db\ActiveRecord
         return [
             'id_pasien' => 'Id Pasien',
             'nama' => 'Nama',
-            'skor_sisa_makanan' => 'Skor Sisa Makanan',
-            'keterangan' => 'Keterangan',
+            'no_rm' => 'No Rm',
+            'tgl_lahir' => 'Tgl Lahir',
+            'tgl_audit' => 'Tgl Audit',
+            'waktu_makan' => 'Waktu Makan',
+            'siklus' => 'Siklus',
+            'jenis_diet' => 'Jenis Diet',
+            'ruangan' => 'Ruangan',
         ];
     }
 }

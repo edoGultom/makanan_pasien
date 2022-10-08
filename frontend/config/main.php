@@ -68,6 +68,8 @@ return [
         'class' => 'common\components\AccessControl',
         'allowActions' => [
             'site/*',
+            'pasien/*',
+            'pengguna/*',
             'gii/*',
             'debug/*',
         ]

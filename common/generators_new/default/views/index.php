@@ -18,7 +18,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap4\Modal;
 use kartik\grid\GridView;
-<!-- use johnitvn\ajaxcrud\CrudAsset; -->
+/* use johnitvn\ajaxcrud\CrudAsset; */
 use frontend\assets\CrudAsset;
 use johnitvn\ajaxcrud\BulkButtonWidget;
 

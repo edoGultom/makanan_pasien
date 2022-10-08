@@ -38,22 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $this->render('sidebar') ?>
             <!-- <div class="container"> -->
             <div class="main-content">
-                <section class="section">
-                    <div class="section-header">
-                        <h1>
-                            <?php
-                            echo Breadcrumbs::widget([
-                                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                                'options' => [],
-                            ]);
-                            ?>
-                        </h1>
-                    </div>
-                </section>
-                <div class="row">
-                    <?= Alert::widget() ?>
-                    <?= $content ?>
-                </div>
+                <?= Alert::widget() ?>
+                <?= $content ?>
             </div>
             <?= $this->render('footer') ?>
         </div>

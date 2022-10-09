@@ -133,7 +133,10 @@ class PerhitunganSisaMakananController extends Controller
                         'refSisaMakanan' => $refSisaMakanan,
                     ]),
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) .
-                        Html::button('Simpan', ['class' => 'btn btn-primary', 'type' => "submit"])
+                        Html::button('Simpan', [
+                            'class' => 'btn btn-primary pjax-delete-link', 'type' => "submit", 'delete-url' => 'perhitungan-sisa-makanan/proses-pilih',
+                            'pjax-container' => 'site-perhitungan'
+                        ])
 
                 ];
             } else if ($model->load($request->post())) {
@@ -150,6 +153,7 @@ class PerhitunganSisaMakananController extends Controller
                     $model->dikalikan = 4;
                 }
                 if ($model->save(false)) {
+                    // return $this->redirect('index');
 
                     return ['forceClose' => true, 'forceReload' => '#site-perhitungan'];
                 }

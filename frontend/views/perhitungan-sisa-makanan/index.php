@@ -19,7 +19,30 @@ $this->title =
 $this->params['breadcrumbs'][] = $this->title;
 
 CrudAsset::register($this);
+$js = <<<JS
+   $(document).on('ready pjax:success', function() {
+         $('.pjax-delete-link').on('click', function(e) {
+            console.log('a')
+             e.preventDefault();
+             var deleteUrl = $(this).attr('delete-url');
+             var pjaxContainer = $(this).attr('pjax-container');
+             var result = confirm('Delete this item, are you sure?');                                
+             if(result) {
+                 $.ajax({
+                     url: deleteUrl,
+                     type: 'post',
+                     error: function(xhr, status, error) {
+                         alert('There was an error with your request.' + xhr.responseText);
+                     }
+                 }).done(function(data) {
+                     $.pjax.reload('#' + $.trim(pjaxContainer), {timeout: 3000});
+                 });
+             }
+         });
 
+});
+JS;
+$this->registerJs($js);
 ?>
 
 <section class="section">
@@ -49,14 +72,18 @@ CrudAsset::register($this);
     </div>
 </section>
 
-
+<?php Pjax::begin([
+    'id' => 'site-perhitungan',
+    'timeout' => 5000
+]); ?>
 <div class="row">
+
     <?php
     foreach ($daftarPasien as $key => $value) :
     ?>
     <div class="col-12 col-sm-12 col-lg-12">
-        <div class="card card-warning profile-widget">
 
+        <div class="card card-warning profile-widget">
             <div class="profile-widget-header">
                 <img alt="image" src=" <?= "/img/avatar/avatar-" . rand(1, 5) . ".png" ?>"
                     class="rounded-circle profile-widget-picture">
@@ -124,7 +151,7 @@ CrudAsset::register($this);
                     </div>
                     <div class="profile-widget-item">
                         <?= ($value->isPasien) ? Html::a(
-                                '<i class="fas fa-calculator"></i>" Hitung Skor',
+                                '<i class="fas fa-calculator"></i> Hitung Skor',
                                 ['hitung-data', 'id_pasien' => $value->id_pasien],
                                 [
                                     'class' => 'btn btn-outline-success font-weight-normal',
@@ -140,42 +167,44 @@ CrudAsset::register($this);
 
                 </div>
             </div>
+
             <div class="profile-widget-description pb-0">
                 <div class="profile-widget-name"><?= $value->nama ?><div class="text-muted d-inline font-weight-normal">
                         <div class="slash"></div><?= Yii::$app->formatter->asDate($value->tgl_lahir) ?>
                     </div>
                     <p>Siklus - <?= $value->siklus ?></p>
                     <p>Jenis Diet - <?= $value->jenis_diet ?></p>
-                    <?php Pjax::begin([
-                            'id' => 'site-perhitungan',
-                        ]); ?>
-                    <div class="d-flex flex-row justify-content-between">
+
+                    Keterangan :
+                    <div class="d-flex flex-row align-items-start justify-content-start">
 
                         <?php
                             foreach ($value->getTaSisaMakanan()->all() as $item) {
                             ?>
-                        <p><?= $item->jenisMakanan->nama ?> -> <?= $item->sisaMakanan->keterangan ?> -> <small
-                                class="text-muted"><?= $item->nilai ?></small></p>
+
+                        <p class="mr-3"><?= $item->jenisMakanan->nama ?> -> <?= $item->sisaMakanan->keterangan ?> ->
+                            <small class="text-muted"><?= $item->nilai ?></small>
+                        </p>
 
 
                         <?php
                             }
                             ?>
                     </div>
-
-
-                    <?php Pjax::end(); ?>
-
                 </div>
             </div>
         </div>
+
     </div>
     <?php
     endforeach;
     ?>
 
-    <?php Modal::begin([
-        "id" => "ajaxCrudModal",
-        "footer" => "", // always need it for jquery plugin
-    ]) ?>
-    <?php Modal::end(); ?>
+</div>
+<?php Pjax::end(); ?>
+
+<?php Modal::begin([
+    "id" => "ajaxCrudModal",
+    "footer" => "", // always need it for jquery plugin
+]) ?>
+<?php Modal::end(); ?>

@@ -57,4 +57,12 @@ class TaPasien extends \yii\db\ActiveRecord
             'ruangan' => 'Ruangan',
         ];
     }
+    public function getIsPasien()
+    {
+        $model = TaSisaMakanan::find()->where(['id_pasien' => $this->id_pasien])->count();
+        if ($model >= 4) {
+            return true;
+        }
+        return false;
+    }
 }

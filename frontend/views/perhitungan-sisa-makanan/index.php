@@ -23,9 +23,25 @@ CrudAsset::register($this);
 ?>
 <section class="section">
     <div class="section-header ">
-        <h1 class="mr-5">
-            <?= $this->title ?>
-        </h1>
+        <div class="d-flex flex-row justify-content-between">
+            <h1 class="mr-5">
+                <?= $this->title ?>
+            </h1>
+            <div>
+                <?=
+                Html::a(
+                    'Export Data',
+                    ['export'],
+                    [
+                        'class' => 'btn btn-lg btn-success font-weight-normal',
+                        'data-pjax' => 0,
+                        'target' => '_blank'
+                    ]
+                )
+                ?>
+            </div>
+        </div>
+
     </div>
 </section>
 <?php Pjax::begin([
@@ -33,43 +49,36 @@ CrudAsset::register($this);
 ]); ?>
 
 <div class="row">
+    <?php
+    foreach ($daftarPasien as $key => $value) :
+    ?>
     <div class="col-12 col-sm-12 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h4>Daftar Pasien</h4>
-            </div>
-            <div class="card-body">
-                <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
-                    <?php
-                    foreach ($daftarPasien as $key => $value) :
-                    ?>
-                    <li class="media d-flex justify-content-center align-items-center">
-                        <img alt="image" class="mr-3 rounded-circle" width="50" src="/img/avatar/avatar-1.png">
-                        <div class="media-body">
-                            <div class="media-title"><?= $value->nama ?></div>
-                            <div class="text-job text-muted">Lahir -
-                                <?= Yii::$app->formatter->asDate($value->tgl_lahir) ?></div>
-                        </div>
-                        <div class="media-cta">
-                            <div class="text-job text-muted">NO RM - <?= $value->no_rm ?></div>
+        <div class="card card-warning profile-widget">
+            <div class="profile-widget-header">
+                <img alt="image" src="/img/avatar/avatar-1.png" class="rounded-circle profile-widget-picture">
+                <div class="profile-widget-items">
+                    <div class="profile-widget-item">
+                        <div class="profile-widget-item-label">NO. RM</div>
+                        <div class="profile-widget-item-value"><?= $value->no_rm ?></div>
+                    </div>
+                    <div class="profile-widget-item">
+                        <div class="profile-widget-item-label">Ruangan</div>
+                        <div class="profile-widget-item-value"><?= $value->ruangan ?></div>
+                    </div>
 
-                        </div>
+                    <div class="profile-widget-item">
+                        <div class="profile-widget-item-label">Waktu Makan</div>
+                        <div class="profile-widget-item-value"><?= $value->waktu_makan ?></div>
+                    </div>
 
-                        <div class="media-cta">
-                            <div class="text-job text-muted">Audit -
-                                <?= Yii::$app->formatter->asDate($value->tgl_audit) ?></div>
+                    <div class="profile-widget-item">
+                        <div class="profile-widget-item-label">Audit</div>
+                        <div class="profile-widget-item-value"> <?= Yii::$app->formatter->asDate($value->tgl_audit) ?>
                         </div>
-                        <div class="media-cta">
-                            <div class="text-job text-muted">Makan - <?= $value->waktu_makan ?></div>
-                        </div>
-                        <div class="media-cta">
-                            <div class="text-job text-muted">Siklus - <?= $value->siklus ?></div>
-                        </div>
-                        <div class="media-cta">
-                            <div class="text-job text-muted">Diet - <?= $value->jenis_diet ?></div>
-                        </div>
-                        <div class="media-cta">
+                    </div>
 
+                    <div class="profile-widget-item">
+                        <div class="profile-widget-item-label">
                             <div class="dropdown d-inline">
                                 <button class="btn btn-outline-info dropdown-toggle" type="button"
                                     id="dropdownMenuButton" .<?= $value->id_pasien ?> data-toggle="dropdown"
@@ -94,7 +103,6 @@ CrudAsset::register($this);
                                                 $check = '<i class="fas fa-check text-success"></i>';
                                             }
                                         ?>
-                                    <!-- <i class="fas fa-check"> -->
                                     <?= Html::a(
                                                 $check . ' <i class="' . $icon . '"></i> ' . $val->kode . '-' . $val->nama . '',
                                                 ['proses-pilih', 'id_pasien' => $value->id_pasien, 'id_jenis_makanan' => $val->id],
@@ -103,24 +111,46 @@ CrudAsset::register($this);
                                                     'role' => 'modal-remote',
                                                 ]
                                             ) ?>
-                                    <!-- <a class="dropdown-item has-icon" href="#"> <i class="<?= $icon ?>"></i>
-                                        <?= $val->kode . '-' . $val->nama ?></a> -->
                                     <?php
                                         endforeach;
                                         ?>
                                 </div>
                             </div>
                         </div>
-                    </li>
-                    <?php
-                    endforeach;
-                    ?>
+                    </div>
+                    <div class="profile-widget-item">
+                        <?= ($value->isPasien) ? Html::a(
+                                '<i class="fas fa-calculator"></i>" Hitung Skor',
+                                ['hitung-data', 'id_pasien' => $value->id_pasien],
+                                [
+                                    'class' => 'btn btn-outline-success font-weight-normal',
+                                    'role' => 'modal-remote',
+                                    'data-confirm' => false, 'data-method' => false, // for overide yii data api
+                                    'data-request-method' => 'post',
+                                    'data-toggle' => 'tooltip',
+                                    'data-confirm-title' => 'Peringatan',
+                                    'data-confirm-message' => 'Apakah anda yakin ingin memproses data pasien ini ???'
+                                ]
+                            )  : '<span class="label label-danger"> - </span>' ?>
+                    </div>
 
-                </ul>
+                </div>
+            </div>
+            <div class="profile-widget-description pb-0">
+                <div class="profile-widget-name">Hasan Basri <div class="text-muted d-inline font-weight-normal">
+                        <div class="slash"></div><?= Yii::$app->formatter->asDate($value->tgl_lahir) ?>
+                    </div>
+                    <p>Siklus - <?= $value->siklus ?></p>
+                    <p>Jenis Diet - <?= $value->jenis_diet ?></p>
+                </div>
             </div>
         </div>
-
     </div>
+    <?php
+    endforeach;
+    ?>
+
+
 
     <?php Pjax::end(); ?>
 

@@ -24,7 +24,7 @@ use yii\bootstrap4\ActiveForm;
         </div>
 
         <div class="col-md-4">
-            <?= $form->field($model, 'nilai')->textInput() ?>
+            <?= $form->field($model, 'nilai')->textInput()->label('Nilai') ?>
         </div>
     </div>
 

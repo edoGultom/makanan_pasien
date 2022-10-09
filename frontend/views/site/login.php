@@ -75,10 +75,10 @@ $password =  json_encode(substr(strrchr(get_class($model), '\\'), 1) . '[passwor
             <div class="text-light p-5 pb-2">
                 <div class="mb-5 pb-3">
                     <h1 class="mb-2 display-4 font-weight-bold">Good Morning</h1>
-                    <h5 class="font-weight-normal text-muted-transparent">Medan, Indonesia</h5>
+                    <h5 class="font-weight-normal text-muted-transparent">Medan, Indonesia,
+                        <?php echo Yii::$app->formatter->asDate('now', 'php: d/M/Y h:m:s') ?></h5>
                 </div>
-                Photo by <a class="text-light bb" target="_blank" href="https://unsplash.com/photos/a8lTjWJJgLA">Justin
-                    Kauffman</a> on <a class="text-light bb" target="_blank" href="https://unsplash.com">Unsplash</a>
+
             </div>
         </div>
     </div>

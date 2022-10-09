@@ -17,8 +17,8 @@ use yii\helpers\Url;
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>PASIEN</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="<?= Url::to(['/pasien']); ?>">Data Pasien</a></li>
-                    <li class="active"><a class="nav-link"
-                            href="<?= Url::to(['/perhitungan-sisa-makanan/index']) ?>">Perhitungan Sisa Makanan</a></li>
+                    <li><a class="nav-link" href="<?= Url::to(['/perhitungan-sisa-makanan/index']) ?>">Perhitungan Sisa
+                            Makanan</a></li>
                 </ul>
             </li>
 

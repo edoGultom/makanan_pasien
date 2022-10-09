@@ -22,22 +22,25 @@ CrudAsset::register($this);
 
 ?>
 <section class="section">
-    <div class="section-header ">
-        <div class="d-flex flex-row justify-content-between">
-            <h1 class="mr-5">
-                <?= $this->title ?>
-            </h1>
+    <div class="section-header">
+        <div class="d-flex flex-row justify-content-between align-items-center">
             <div>
-                <?=
-                Html::a(
-                    'Export Data',
-                    ['export'],
-                    [
-                        'class' => 'btn btn-lg btn-success font-weight-normal',
-                        'data-pjax' => 0,
-                        'target' => '_blank'
-                    ]
-                )
+                <h1 class="mr-5">
+                    <?= $this->title ?>
+                </h1>
+            </div>
+            <div>
+                <?= ($isCetak) ?
+                    Html::a(
+                        'Export Data',
+                        ['export'],
+                        [
+                            'class' => 'btn btn-lg btn-success font-weight-normal',
+                            'data-pjax' => 0,
+                            'target' => '_blank'
+                        ]
+                    )
+                    : ''
                 ?>
             </div>
         </div>
@@ -55,7 +58,8 @@ CrudAsset::register($this);
     <div class="col-12 col-sm-12 col-lg-12">
         <div class="card card-warning profile-widget">
             <div class="profile-widget-header">
-                <img alt="image" src="/img/avatar/avatar-1.png" class="rounded-circle profile-widget-picture">
+                <img alt="image" src=" <?= "/img/avatar/avatar-" . rand(1, 5) . ".png" ?>"
+                    class="rounded-circle profile-widget-picture">
                 <div class="profile-widget-items">
                     <div class="profile-widget-item">
                         <div class="profile-widget-item-label">NO. RM</div>
@@ -137,7 +141,7 @@ CrudAsset::register($this);
                 </div>
             </div>
             <div class="profile-widget-description pb-0">
-                <div class="profile-widget-name">Hasan Basri <div class="text-muted d-inline font-weight-normal">
+                <div class="profile-widget-name"><?= $value->nama ?><div class="text-muted d-inline font-weight-normal">
                         <div class="slash"></div><?= Yii::$app->formatter->asDate($value->tgl_lahir) ?>
                     </div>
                     <p>Siklus - <?= $value->siklus ?></p>

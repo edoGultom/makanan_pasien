@@ -47,9 +47,11 @@ class PerhitunganSisaMakananController extends Controller
     {
         $daftarPasien = TaPasien::find()->all();
         $refJenisMakanan = RefJenisMakanan::find()->all();
+        $isCetak = TaSkorMakanan::find()->count();
         return $this->render('index', [
             'daftarPasien' => $daftarPasien,
             'refJenisMakanan' => $refJenisMakanan,
+            'isCetak' => $isCetak,
         ]);
     }
     public function actionHitungData($id_pasien)

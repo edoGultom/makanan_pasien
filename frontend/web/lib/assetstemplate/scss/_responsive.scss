@@ -1,0 +1,71 @@
+
+
+/* ==============
+  Responsive
+===================*/
+
+@media (max-width: 620px) {
+    .mo-mb-2 {
+    margin-bottom: 10px;
+    }
+    
+    .mo-mt-2 {
+    margin-top: 10px !important;
+    }
+    .ex-pages{
+      padding: 24px 0px;
+    }
+}
+
+
+@media (min-width: 768px) and (max-width: 991px) {
+    body {
+      overflow-x: hidden;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      overflow-x: hidden;
+    }
+  
+    .navbar-custom {
+      margin-left: 70px !important;
+    }
+  
+    .content-page {
+      margin-left: 0 !important;
+    }
+    .content-page{ 
+        .content{
+        padding: 0px;
+      }
+    }
+  }
+
+  
+  @media (max-width: 480px) {
+  
+    .button-menu-mobile {
+      display: block;
+    }
+    .navbar-custom {
+      margin-left: 0 !important;
+    }
+    .account-page-full{
+      &.wrapper-page {
+        width: 100%;
+        position: relative;
+      }
+    }
+  }
+  
+  @media (max-width: 419px) {
+
+    .content-page {
+      margin-left: 70px;
+    }
+}
+
+
+  

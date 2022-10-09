@@ -11,30 +11,17 @@ use yii\web\AssetBundle;
 class CrudAsset extends AssetBundle
 {
     public $css = [
-        'crudasset/ajaxcrud.css'
+        'lib/assetstemplate/crudasset/ajaxcrud.css'
     ];
     public $js = [
-        'crudasset/ModalRemote.js',
-        'crudasset/ajaxcrud.min.js',
+        'lib/assetstemplate/crudasset/ModalRemote.js',
+        'lib/assetstemplate/crudasset/ajaxcrud.min.js',
 
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap4\BootstrapAsset',
-        'yii\bootstrap4\BootstrapPluginAsset',
+        'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
         'kartik\grid\GridViewAsset',
     ];
-    public function init()
-    {
-        // In dev mode use non-minified javascripts
-        $this->js = YII_DEBUG ? [
-            'crudasset/ModalRemote.js',
-            'crudasset/ajaxcrud.js',
-        ] : [
-            'cModalRemote.min.js',
-            'crudasset/ajaxcrud.min.js',
-        ];
-
-        parent::init();
-    }
 }

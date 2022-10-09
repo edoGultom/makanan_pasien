@@ -4,7 +4,9 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap4\Modal;
 use kartik\grid\GridView;
-use frontend\assets\CrudAsset;
+// use frontend\assets\CrudAsset;
+// use johnitvn\ajaxcrud\CrudAsset;
+use johnitvn\ajaxcrud\CrudAsset;
 use yii\widgets\Pjax;
 use johnitvn\ajaxcrud\BulkButtonWidget;
 
@@ -28,10 +30,6 @@ CrudAsset::register($this);
 </section>
 <?php Pjax::begin([
     'id' => 'site-perhitungan',
-    'enablePushState' => false, // to disable push state
-    'enableReplaceState' => false, // to disable replace state,
-    'timeout' => 999999999,
-    'clientOptions' => ['method' => 'POST']
 ]); ?>
 
 <div class="row">
@@ -46,7 +44,7 @@ CrudAsset::register($this);
                     foreach ($daftarPasien as $key => $value) :
                     ?>
                     <li class="media d-flex justify-content-center align-items-center">
-                        <img alt="image" class="mr-3 rounded-circle" width="50" src="img/avatar/avatar-1.png">
+                        <img alt="image" class="mr-3 rounded-circle" width="50" src="/img/avatar/avatar-1.png">
                         <div class="media-body">
                             <div class="media-title"><?= $value->nama ?></div>
                             <div class="text-job text-muted">Lahir -

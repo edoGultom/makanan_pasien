@@ -13,6 +13,8 @@ RewriteRule ^images/(.*)$ /frontend/web/images/$1 [L]
 RewriteRule ^scss/(.*)$ /frontend/web/scss/$1 [L]
 RewriteRule ^vendors/(.*)$ /frontend/web/vendors/$1 [L]
 RewriteRule ^crudasset/(.*)$ /frontend/web/crudasset/$1 [L]
+RewriteRule ^bootstrap/(.*)$ /frontend/web/bootstrap/$1 [L]
+RewriteRule ^lib/(.*)$ /frontend/web/lib/$1 [L]
 
 RewriteCond %{REQUEST_URI} !^/frontend/web/(|css|vendors|less|js|img|assets|assetstemplate|upload|fonts|fonts|images)/  
 RewriteCond %{REQUEST_URI} ^/(frontend)  

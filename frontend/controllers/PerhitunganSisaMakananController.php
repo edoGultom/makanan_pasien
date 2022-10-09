@@ -2,12 +2,9 @@
 
 namespace frontend\controllers;
 
-use common\models\RefJenisMakanan;
-use common\models\RefSisaMakanan;
-use common\models\TaPasien;
-use common\models\TaSisaMakanan;
 use Yii;
-use frontend\models\PasienSearch;
+use common\models\User;
+use frontend\models\PenggunaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -15,9 +12,36 @@ use \yii\web\Response;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
+use common\models\RefJenisMakanan;
+use common\models\RefSisaMakanan;
+use common\models\TaPasien;
+use common\models\TaSisaMakanan;
 
-class PerhitunganSisaMakananController extends \yii\web\Controller
+/**
+ * PenggunaController implements the CRUD actions for User model.
+ */
+class PerhitunganSisaMakananController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                    'bulkdelete' => ['post'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Lists all User models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $daftarPasien = TaPasien::find()->all();
@@ -54,12 +78,14 @@ class PerhitunganSisaMakananController extends \yii\web\Controller
             } else if ($model->load($request->post())) {
 
                 if ($model->save(false)) {
-                    return [
-                        'forceReload' => '#site-perhitungan',
-                        'title' => "Informasi ",
-                        'content' => "<div class'bg-success'>Pembuatan akun berhasil</div>",
-                        'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"])
-                    ];
+
+                    return ['forceClose' => true, 'forceReload' => '#site-perhitungan'];
+                    // return [
+                    //     'forceReload' => '#site-perhitungan',
+                    //     'title' => "Informasi ",
+                    //     'content' => "<div class'bg-success'>Pembuatan akun berhasil</div>",
+                    //     'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"])
+                    // ];
                 }
             } else {
                 return [
@@ -88,27 +114,4 @@ class PerhitunganSisaMakananController extends \yii\web\Controller
             }
         }
     }
-    // public function actionProsesPilih($id_pasien, $id_jenis_makanan)
-    // {
-    //     $request = Yii::$app->request;
-    //     $taSisaMakanan = TaSisaMakanan::find()->where(['id_pasien' => $id_pasien, 'id_jenis_makanan' => $id_jenis_makanan])->one();
-    //     if (!isset($taSisaMakanan)) {
-    //         $taSisaMakanan = new TaSisaMakanan();
-    //     }
-
-    //     $taSisaMakanan->id_pasien = $id_pasien;
-    //     $taSisaMakanan->id_jenis_makanan = $id_jenis_makanan;
-    //     // $taSisaMakanan->save(false);
-
-    //     if ($request->isAjax) {
-
-    //         Yii::$app->response->format = Response::FORMAT_JSON;
-    //         return ['forceReload' => '#site-perhitungan'];
-    //     } else {
-    //         /*
-    //         *   Process for non-ajax request
-    //         */
-    //         return $this->redirect(['index']);
-    //     }
-    // }
 }

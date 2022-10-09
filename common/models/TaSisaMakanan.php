@@ -48,4 +48,12 @@ class TaSisaMakanan extends \yii\db\ActiveRecord
             'dikalikan' => 'Dikalikan',
         ];
     }
+    public function getJenisMakanan()
+    {
+        return $this->hasOne(RefJenisMakanan::className(), ['id' => 'id_jenis_makanan']);
+    }
+    public function getSisaMakanan()
+    {
+        return $this->hasOne(RefSisaMakanan::className(), ['id' => 'id_sisa_makanan']);
+    }
 }

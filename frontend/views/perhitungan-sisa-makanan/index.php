@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 CrudAsset::register($this);
 
 ?>
+
 <section class="section">
     <div class="section-header">
         <div class="d-flex flex-row justify-content-between align-items-center">
@@ -47,9 +48,7 @@ CrudAsset::register($this);
 
     </div>
 </section>
-<?php Pjax::begin([
-    'id' => 'site-perhitungan',
-]); ?>
+
 
 <div class="row">
     <?php
@@ -57,6 +56,7 @@ CrudAsset::register($this);
     ?>
     <div class="col-12 col-sm-12 col-lg-12">
         <div class="card card-warning profile-widget">
+
             <div class="profile-widget-header">
                 <img alt="image" src=" <?= "/img/avatar/avatar-" . rand(1, 5) . ".png" ?>"
                     class="rounded-circle profile-widget-picture">
@@ -146,6 +146,26 @@ CrudAsset::register($this);
                     </div>
                     <p>Siklus - <?= $value->siklus ?></p>
                     <p>Jenis Diet - <?= $value->jenis_diet ?></p>
+                    <?php Pjax::begin([
+                            'id' => 'site-perhitungan',
+                        ]); ?>
+                    <div class="d-flex flex-row justify-content-between">
+
+                        <?php
+                            foreach ($value->getTaSisaMakanan()->all() as $item) {
+                            ?>
+                        <p><?= $item->jenisMakanan->nama ?> -> <?= $item->sisaMakanan->keterangan ?> -> <small
+                                class="text-muted"><?= $item->nilai ?></small></p>
+
+
+                        <?php
+                            }
+                            ?>
+                    </div>
+
+
+                    <?php Pjax::end(); ?>
+
                 </div>
             </div>
         </div>
@@ -153,10 +173,6 @@ CrudAsset::register($this);
     <?php
     endforeach;
     ?>
-
-
-
-    <?php Pjax::end(); ?>
 
     <?php Modal::begin([
         "id" => "ajaxCrudModal",

@@ -65,4 +65,8 @@ class TaPasien extends \yii\db\ActiveRecord
         }
         return false;
     }
+    public function getTaSisaMakanan()
+    {
+        return $this->hasMany(TaSisaMakanan::className(), ['id_pasien' => 'id_pasien']);
+    }
 }

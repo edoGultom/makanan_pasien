@@ -66,8 +66,7 @@ class PasienController extends Controller
                     'model' => $this->findModel($id),
                 ]),
                 'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
-                    Html::a('Ubah', ['update', $id], ['class' => 'btn
-btn-primary', 'role' => 'modal-remote'])
+                    Html::a('Ubah', ['update', $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
             ];
         } else {
             return $this->render('view', [
@@ -94,7 +93,7 @@ btn-primary', 'role' => 'modal-remote'])
             Yii::$app->response->format = Response::FORMAT_JSON;
             if ($request->isGet) {
                 return [
-                    'title' => "Tambah TaPasien",
+                    'title' => "Tambah Pasien",
                     'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),
@@ -105,7 +104,7 @@ btn-primary', 'role' => 'modal-remote'])
             } else if ($model->load($request->post()) && $model->save()) {
                 return [
                     'forceReload' => '#crud-datatable-pjax',
-                    'title' => "Tambah TaPasien",
+                    'title' => "Tambah Pasien",
                     'content' => '<span class="text-success">Create TaPasien berhasil</span>',
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-default float-left', 'data-dismiss' => "modal"]) .
                         Html::a('Tambah Lagi', ['create'], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
@@ -113,7 +112,7 @@ btn-primary', 'role' => 'modal-remote'])
                 ];
             } else {
                 return [
-                    'title' => "Tambah TaPasien",
+                    'title' => "Tambah Pasien",
                     'content' => $this->renderAjax('create', [
                         'model' => $model,
                     ]),

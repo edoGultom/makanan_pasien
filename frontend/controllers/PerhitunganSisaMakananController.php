@@ -67,18 +67,18 @@ class PerhitunganSisaMakananController extends Controller
             $jumlah += $value->nilai;
             $total += $value->nilai * $value->dikalikan;
         endforeach;
-        echo "<pre>";
-        print_r($total);
-        echo "</pre>";
-        exit();
-        $total = (($total * 100) / ($jumlahJenisMenu * 5));
+        // echo "<pre>";
+        // print_r($total);
+        // echo "</pre>";
+        // exit();
+        // $total = (($total * 100) / ($jumlahJenisMenu * 5));
+        $persentasi = ($total / ($jumlahJenisMenu * 5) * 100);
 
         $TaSkorMakanan = TaSkorMakanan::find()->where(['id_pasien' => $id_pasien])->one();
         if (!isset($TaSkorMakanan)) {
             $TaSkorMakanan = new TaSkorMakanan();
         }
         $TaSkorMakanan->id_pasien = $id_pasien;
-        $TaSkorMakanan->jumlah = $jumlah;
         $TaSkorMakanan->jumlah = $jumlah;
         $TaSkorMakanan->persentasi_skor = $persentasi;
         $TaSkorMakanan->keterangan_skor = ($persentasi > 20) ? 'Bersisa' : 'Tidak Bersisa';
@@ -134,8 +134,7 @@ class PerhitunganSisaMakananController extends Controller
                     ]),
                     'footer' => Html::button('Tutup', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"]) .
                         Html::button('Simpan', [
-                            'class' => 'btn btn-primary pjax-delete-link', 'type' => "submit", 'delete-url' => 'perhitungan-sisa-makanan/proses-pilih',
-                            'pjax-container' => 'site-perhitungan'
+                            'class' => 'btn btn-primary', 'type' => "submit",
                         ])
 
                 ];

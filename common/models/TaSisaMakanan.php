@@ -31,9 +31,9 @@ class TaSisaMakanan extends \yii\db\ActiveRecord
     {
         return [
             [['id_pasien', 'id_jenis_makanan', 'id_sisa_makanan', 'nilai', 'dikalikan'], 'integer'],
+            ['nilai', 'number', 'max' => 4, 'min' => 0, 'tooBig' => 'Nilai max "4".', 'tooSmall' => 'Nilai min "0"']
         ];
     }
-
     /**
      * {@inheritdoc}
      */

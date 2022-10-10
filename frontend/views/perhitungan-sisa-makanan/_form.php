@@ -5,9 +5,22 @@ use kartik\date\DatePicker;
 use yii\helpers\Url;
 use yii\bootstrap4\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model common\models\TaPasien */
-/* @var $form yii\widgets\ActiveForm */
+$js = <<<JS
+    $('select').on('change', function() {
+        if(this.value == 1){
+            $('#nilai').val(4); //setter
+        }else if(this.value == 2){
+            $('#nilai').val(3); //setter
+        }else if(this.value == 3){
+            $('#nilai').val(2); //setter
+        }else if(this.value == 4){
+            $('#nilai').val(1); //setter
+        }else if(this.value == 5){
+            $('#nilai').val(0); //setter
+        }
+    });
+JS;
+$this->registerJs($js);
 ?>
 
 <div class="perhitungan-sisa-makan-form">
@@ -16,15 +29,24 @@ use yii\bootstrap4\ActiveForm;
 
     <div class="row">
 
-        <div class="col-md-8">
+        <div class="col-md-9">
             <?=
             $form->field($model, 'id_sisa_makanan')->dropDownList(
                 $refSisaMakanan,
+                [
+                    'prompt' => '-Silahkan Pilih-',
+                ]
             )->label('Kategori '); ?>
         </div>
 
-        <div class="col-md-4">
-            <?= $form->field($model, 'nilai')->textInput()->label('Nilai') ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'nilai')->textInput([
+                // 'readOnly' => 'readOnly',
+                'id' => 'nilai',
+                'type' => 'number',
+                'min' => 0,
+                'max' => 4
+            ])->label('Nilai') ?>
         </div>
     </div>
 

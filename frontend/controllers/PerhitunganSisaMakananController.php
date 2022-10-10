@@ -138,7 +138,7 @@ class PerhitunganSisaMakananController extends Controller
                         ])
 
                 ];
-            } else if ($model->load($request->post())) {
+            } else if ($model->load($request->post()) && $model->validate()) {
 
                 if ($model->id_sisa_makanan == 1) {
                     $model->dikalikan = 0;
@@ -173,8 +173,21 @@ class PerhitunganSisaMakananController extends Controller
             /*
             *   Process for non-ajax request
             */
-            if ($model->load($request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($request->post()) && $model->validate()) {
+                if ($model->id_sisa_makanan == 1) {
+                    $model->dikalikan = 0;
+                } else if ($model->id_sisa_makanan == 2) {
+                    $model->dikalikan = 1;
+                } else if ($model->id_sisa_makanan == 3) {
+                    $model->dikalikan = 2;
+                } else if ($model->id_sisa_makanan == 4) {
+                    $model->dikalikan = 3;
+                } else if ($model->id_sisa_makanan == 5) {
+                    $model->dikalikan = 4;
+                }
+                if ($model->save(false)) {
+                    return $this->redirect(['index']);
+                }
             } else {
                 return $this->render('create', [
                     'model' => $model,

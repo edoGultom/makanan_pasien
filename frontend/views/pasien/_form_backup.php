@@ -19,10 +19,10 @@ use yii\bootstrap4\ActiveForm;
         <div class="col-md-12">
             <?= $form->field($model, 'nama')->textarea(['rows' => 6]) ?>
         </div>
-        <div class="col-md-5">
-            <?= $form->field($model, 'no_rm')->textInput(['maxlength' => true])->label('NO. RM') ?>
+        <div class="col-md-4">
+            <?= $form->field($model, 'no_rm')->textInput(['maxlength' => true]) ?>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-8">
             <?= $form->field($model, 'tgl_lahir')->widget(DatePicker::classname(), [
                 'options' => [
                     'placeholder' => 'YYYY-MM-DD',
@@ -34,15 +34,16 @@ use yii\bootstrap4\ActiveForm;
             ])->label('Tanggal Lahir');
             ?>
         </div>
-
-        <div class="col-md-5">
-            <?= $form->field($model, 'siklus')->textarea(['rows' => 6]) ?>
+        <div class="col-md-4">
+            <?=
+            $form->field($model, 'waktu_makan')->dropDownList(
+                ['pagi' => 'Pagi', 'siang' => 'Siang', 'malam' => 'Malam'],
+            )->label('Nama Dokumen'); ?>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-8">
             <?= $form->field($model, 'tgl_audit')->widget(DatePicker::classname(), [
                 'options' => [
                     'placeholder' => 'YYYY-MM-DD',
-
                 ],
                 'pluginOptions' => [
                     'autoclose' => true,
@@ -50,6 +51,13 @@ use yii\bootstrap4\ActiveForm;
                 ]
             ])->label('Tanggal Audit'); ?>
         </div>
+        <div class="col-md-4">
+            <?= $form->field($model, 'jenis_diet')->textarea(['rows' => 6]) ?>
+        </div>
+        <div class="col-md-8">
+            <?= $form->field($model, 'siklus')->textarea(['rows' => 6]) ?>
+        </div>
+
         <div class="col-md-12">
             <?= $form->field($model, 'ruangan')->textarea(['rows' => 6]) ?>
         </div>

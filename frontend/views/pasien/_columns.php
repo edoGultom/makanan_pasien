@@ -42,20 +42,11 @@ return [
             return Yii::$app->formatter->asDate($model->tgl_audit);
         }
     ],
-    [
-        'class' => '\kartik\grid\DataColumn',
-        'header' => 'WAKTU MAKAN',
-        'attribute' => 'waktu_makan',
-    ],
+
     [
         'class' => '\kartik\grid\DataColumn',
         'header' => 'SIKLUS',
         'attribute' => 'siklus',
-    ],
-    [
-        'class' => '\kartik\grid\DataColumn',
-        'header' => 'JENIS DIET',
-        'attribute' => 'jenis_diet',
     ],
     [
         'class' => '\kartik\grid\DataColumn',

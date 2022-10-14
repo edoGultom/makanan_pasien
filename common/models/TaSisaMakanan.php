@@ -11,6 +11,7 @@ use Yii;
  * @property int|null $id_pasien
  * @property int|null $id_jenis_makanan
  * @property int|null $id_sisa_makanan
+ * @property int|null $id_waktu
  * @property int|null $nilai
  * @property int|null $dikalikan
  */
@@ -30,10 +31,10 @@ class TaSisaMakanan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_pasien', 'id_jenis_makanan', 'id_sisa_makanan', 'nilai', 'dikalikan'], 'integer'],
-            ['nilai', 'number', 'max' => 4, 'min' => 0, 'tooBig' => 'Nilai max "4".', 'tooSmall' => 'Nilai min "0"']
+            [['id_pasien', 'id_jenis_makanan', 'id_sisa_makanan', 'id_waktu', 'nilai', 'dikalikan'], 'integer'],
         ];
     }
+
     /**
      * {@inheritdoc}
      */
@@ -44,6 +45,7 @@ class TaSisaMakanan extends \yii\db\ActiveRecord
             'id_pasien' => 'Id Pasien',
             'id_jenis_makanan' => 'Id Jenis Makanan',
             'id_sisa_makanan' => 'Id Sisa Makanan',
+            'id_waktu' => 'Id Waktu',
             'nilai' => 'Nilai',
             'dikalikan' => 'Dikalikan',
         ];

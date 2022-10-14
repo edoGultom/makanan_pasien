@@ -43,11 +43,12 @@ class RefJenisMakanan extends \yii\db\ActiveRecord
             'nama' => 'Nama',
         ];
     }
-    public function getIsDataTaSisaMakanan($id_pasien, $id_jenis_makanan = null)
+    public function getIsDataTaSisaMakanan($id_pasien, $id_waktu)
     {
         if (TaSisaMakanan::find()->where([
             'id_jenis_makanan' => $this->id,
-            'id_pasien' => $id_pasien
+            'id_pasien' => $id_pasien,
+            'id_waktu' => $id_waktu
         ])->exists()) {
             return true;
         } else {

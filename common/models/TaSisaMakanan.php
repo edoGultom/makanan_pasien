@@ -56,6 +56,11 @@ class TaSisaMakanan extends \yii\db\ActiveRecord
     }
     public function getSisaMakanan()
     {
-        return $this->hasOne(RefSisaMakanan::className(), ['id' => 'id_sisa_makanan']);
+        $model = RefSisaMakanan::find()->where(['id' => $this->id_sisa_makanan])->one();
+        if ($model) {
+            return $model;
+        }
+        return false;
+        // return $this->hasOne(RefSisaMakanan::className(), ['id' => 'id_sisa_makanan']);
     }
 }

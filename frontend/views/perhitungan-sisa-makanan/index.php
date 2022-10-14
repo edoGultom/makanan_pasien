@@ -209,8 +209,10 @@ CrudAsset::register($this);
                                                     <div>
                                                         <?php
                                                                 foreach ($waktu->taSisaMakan as $ket) {
+                                                                    $keterangan =  ($ket->sisaMakanan) ? $ket->sisaMakanan->keterangan : '';
+                                                                    $nama =  ($ket->jenisMakanan) ? $ket->jenisMakanan->nama : '';
                                                                 ?>
-                                                        <?= $ket->jenisMakanan->nama . ' -> ' . $ket->sisaMakanan->keterangan . ' -> ' . $ket->nilai ?>
+                                                        <?= $nama . ' -> ' . $keterangan . ' -> ' . $ket->nilai ?>
                                                         <div class="bullet"></div>
 
                                                         <?php

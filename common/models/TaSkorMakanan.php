@@ -29,7 +29,7 @@ class TaSkorMakanan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_pasien', 'jumlah'], 'integer'],
+            [['id_pasien', 'id_waktu_makan', 'jumlah'], 'integer'],
             [['persentasi_skor'], 'number'],
             [['keterangan_skor'], 'string', 'max' => 255],
         ];
@@ -46,6 +46,7 @@ class TaSkorMakanan extends \yii\db\ActiveRecord
             'jumlah' => 'Jumlah',
             'persentasi_skor' => 'Persentasi Skor',
             'keterangan_skor' => 'Keterangan Skor',
+            'id_waktu_makan' => 'id Waktu Makan'
         ];
     }
     public function getPasien()

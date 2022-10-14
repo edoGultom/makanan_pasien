@@ -11,7 +11,7 @@ use Yii;
  * @property int|null $id_pasien
  * @property int|null $id_jenis_makanan
  * @property int|null $id_sisa_makanan
- * @property int|null $id_waktu
+ * @property int|null $id_waktu_makan
  * @property int|null $nilai
  * @property int|null $dikalikan
  */
@@ -31,7 +31,7 @@ class TaSisaMakanan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_pasien', 'id_jenis_makanan', 'id_sisa_makanan', 'id_waktu', 'nilai', 'dikalikan'], 'integer'],
+            [['id_pasien', 'id_jenis_makanan', 'id_sisa_makanan', 'id_waktu_makan', 'nilai', 'dikalikan'], 'integer'],
         ];
     }
 
@@ -45,7 +45,7 @@ class TaSisaMakanan extends \yii\db\ActiveRecord
             'id_pasien' => 'Id Pasien',
             'id_jenis_makanan' => 'Id Jenis Makanan',
             'id_sisa_makanan' => 'Id Sisa Makanan',
-            'id_waktu' => 'Id Waktu',
+            'id_waktu_makan' => 'Id Waktu',
             'nilai' => 'Nilai',
             'dikalikan' => 'Dikalikan',
         ];

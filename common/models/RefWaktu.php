@@ -40,8 +40,10 @@ class RefWaktu extends \yii\db\ActiveRecord
             'nama' => 'Nama',
         ];
     }
-    public function getWaktuMakan()
+    public function getWaktuMakan($id_pasien)
     {
-        return $this->hasOne(TaWaktuMakan::className(), ['id_waktu' => 'id']);
+        return $this->hasOne(TaWaktuMakan::className(), ['id_waktu' => 'id'])->andOnCondition([
+            'id_pasien' => $id_pasien,
+        ])->exists();
     }
 }

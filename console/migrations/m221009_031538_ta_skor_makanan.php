@@ -15,6 +15,7 @@ class m221009_031538_ta_skor_makanan extends Migration
         $this->createTable('ta_skor_makanan', [
             'id' => $this->primaryKey(),
             'id_pasien' => $this->tinyInteger(),
+            'id_waktu_makan' => $this->tinyInteger(),
             'jumlah' => $this->integer(),
             'persentasi_skor' => $this->float(),
             'keterangan_skor' => $this->string(255),

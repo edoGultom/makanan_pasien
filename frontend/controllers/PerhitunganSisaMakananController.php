@@ -51,20 +51,17 @@ class PerhitunganSisaMakananController extends Controller
         $refJenisMakanan = RefJenisMakanan::find()->all();
         $refWaktu = RefWaktu::find()->all();
         $isCetak = TaSkorMakanan::find()->count();
-        $taWaktuMakan = TaWaktuMakan::find()->all();
         return $this->render('index', [
             'daftarPasien' => $daftarPasien,
             'refJenisMakanan' => $refJenisMakanan,
             'refWaktu' => $refWaktu,
             'isCetak' => $isCetak,
-            'taWaktuMakan' => $taWaktuMakan,
         ]);
     }
-    public function actionHitungData($id_pasien)
+    public function actionHitungData($id_pasien, $id_waktu_makan)
     {
         $request = Yii::$app->request;
-        $model = TaSisaMakanan::find()->where(['id_pasien' => $id_pasien])->all();
-
+        $model = TaSisaMakanan::find()->where(['id_pasien' => $id_pasien, 'id_waktu_makan' => $id_waktu_makan])->all();
 
         $total = 0;
         $jumlahJenisMenu = 4;
@@ -73,11 +70,7 @@ class PerhitunganSisaMakananController extends Controller
             $jumlah += $value->nilai;
             $total += $value->nilai * $value->dikalikan;
         endforeach;
-        // echo "<pre>";
-        // print_r($total);
-        // echo "</pre>";
-        // exit();
-        // $total = (($total * 100) / ($jumlahJenisMenu * 5));
+
         $persentasi = ($total / ($jumlahJenisMenu * 5) * 100);
 
         $TaSkorMakanan = TaSkorMakanan::find()->where(['id_pasien' => $id_pasien])->one();
@@ -86,6 +79,7 @@ class PerhitunganSisaMakananController extends Controller
         }
         $TaSkorMakanan->id_pasien = $id_pasien;
         $TaSkorMakanan->jumlah = $jumlah;
+        $TaSkorMakanan->id_waktu_makan = $id_waktu_makan;
         $TaSkorMakanan->persentasi_skor = $persentasi;
         $TaSkorMakanan->keterangan_skor = ($persentasi > 20) ? 'Bersisa' : 'Tidak Bersisa';
         $TaSkorMakanan->save();
@@ -118,16 +112,16 @@ class PerhitunganSisaMakananController extends Controller
             'model' => $model,
         ]);
     }
-    public function actionProsesPilihMakanan($id_pasien, $id_waktu, $id_jenis_makanan)
+    public function actionProsesPilihMakanan($id_pasien, $id_waktu_makan, $id_jenis_makanan)
     {
         $request = Yii::$app->request;
-        $model = TaSisaMakanan::find()->where(['id_pasien' => $id_pasien, 'id_jenis_makanan' => $id_jenis_makanan, 'id_waktu' => $id_waktu])->one();
+        $model = TaSisaMakanan::find()->where(['id_pasien' => $id_pasien, 'id_jenis_makanan' => $id_jenis_makanan, 'id_waktu_makan' => $id_waktu_makan])->one();
         if (!isset($model)) {
             $model = new TaSisaMakanan();
         }
         $model->id_pasien = $id_pasien;
         $model->id_jenis_makanan = $id_jenis_makanan;
-        $model->id_waktu = $id_waktu;
+        $model->id_waktu_makan = $id_waktu_makan;
 
         $refSisaMakanan =  ArrayHelper::map(RefSisaMakanan::find()->all(), 'id', 'keterangan');
 
@@ -161,8 +155,8 @@ class PerhitunganSisaMakananController extends Controller
                 }
                 if ($model->save(false)) {
                     // return $this->redirect('index');
-
                     return ['forceClose' => true, 'forceReload' => '#site-perhitungan'];
+                    // return $this->redirect(['index']);
                 }
             } else {
                 return [
@@ -234,6 +228,7 @@ class PerhitunganSisaMakananController extends Controller
 
                 if ($model->save(false)) {
                     return ['forceClose' => true, 'forceReload' => '#site-perhitungan'];
+                    // return $this->redirect(['index']);
                 }
             } else {
                 return [

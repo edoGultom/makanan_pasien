@@ -52,9 +52,9 @@ class TaPasien extends \yii\db\ActiveRecord
             'ruangan' => 'Ruangan',
         ];
     }
-    public function getIsPasien()
+    public function getIsPasien($id_waktu_makan)
     {
-        $model = TaSisaMakanan::find()->where(['id_pasien' => $this->id_pasien])->count();
+        $model = TaSisaMakanan::find()->where(['id_pasien' => $this->id_pasien, 'id_waktu_makan' => $id_waktu_makan])->count();
         if ($model >= 4) {
             return true;
         }
@@ -63,5 +63,13 @@ class TaPasien extends \yii\db\ActiveRecord
     public function getTaSisaMakanan()
     {
         return $this->hasMany(TaSisaMakanan::className(), ['id_pasien' => 'id_pasien']);
+    }
+    public function getCountTaWaktuMakanPasien()
+    {
+        return $this->hasMany(TaWaktuMakan::className(), ['id_pasien' => 'id_pasien'])->count();
+    }
+    public function getDataTaWaktuMakanPasien()
+    {
+        return $this->hasMany(TaWaktuMakan::className(), ['id_pasien' => 'id_pasien']);
     }
 }

@@ -18,12 +18,13 @@ $this->title =
     'Perhitungan Sisa Makanan';
 $this->params['breadcrumbs'][] = $this->title;
 $js = <<< JS
-    $(".filter-dropdown").on("click", ".dropdown-toggle", function(e) { 
-        e.preventDefault();
-        $(this).parent().addClass("show");
-        $(this).attr("aria-expanded", "true");
-        $(this).next().addClass("show"); 
-      });
+    $(document).ready(function(event) {
+        $('body').on('click', '.dropdown-toggle', function () {
+            $(this).parent().addClass("show");
+            $(this).attr("aria-expanded", "true");
+            $(this).next().addClass("show"); 
+        });
+    });
 JS;
 $this->registerJs($js);
 
@@ -109,7 +110,7 @@ CrudAsset::register($this);
                                         } else if ($val->id == 3) {
                                             $icon = 'fa fa-cloud-moon';
                                         }
-                                        if ($val->waktuMakan != null) {
+                                        if ($val->getWaktuMakan($value->id_pasien)) {
                                             $check = '<i class="fas fa-check text-success"></i>';
                                         }
                                     ?>
@@ -126,22 +127,6 @@ CrudAsset::register($this);
                                     ?>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="profile-widget-item">
-                        <?= ($value->isPasien) ? Html::a(
-                                '<i class="fas fa-calculator"></i> Hitung Skor',
-                                ['hitung-data', 'id_pasien' => $value->id_pasien],
-                                [
-                                    'class' => 'btn btn-outline-success font-weight-normal',
-                                    'role' => 'modal-remote',
-                                    'data-confirm' => false, 'data-method' => false, // for overide yii data api
-                                    'data-request-method' => 'post',
-                                    'data-toggle' => 'tooltip',
-                                    'data-confirm-title' => 'Peringatan',
-                                    'data-confirm-message' => 'Apakah anda yakin ingin memproses data pasien ini ???'
-                                ]
-                            )  : '<span class="label label-danger"> - </span>' ?>
                     </div>
 
                 </div>
@@ -170,15 +155,33 @@ CrudAsset::register($this);
                             </div>
                             </div> -->
                             <div class="summary-item">
-                                <h6>Item List <span class="text-muted">(<?= count($taWaktuMakan) ?> Items)</span></h6>
+                                <h6>
+                                    Item List
+                                    <span class="text-muted">
+                                        (<?= $value->countTaWaktuMakanPasien ?> Items)
+                                    </span>
+                                </h6>
                                 <ul class="list-unstyled list-unstyled-border">
                                     <?php
-                                        foreach ($taWaktuMakan as $key => $waktu) :
-
+                                        foreach ($value->dataTaWaktuMakanPasien as $key => $waktu) :
                                         ?>
                                     <li class="media">
                                         <div class="media-body">
-                                            <div class="media-right">SKOR</div>
+                                            <div class="media-right">
+                                                <?= ($value->getIsPasien($waktu->id)) ? Html::a(
+                                                            '<i class="fas fa-calculator"></i> Hitung Skor',
+                                                            ['hitung-data', 'id_pasien' => $value->id_pasien, 'id_waktu_makan' => $waktu->id],
+                                                            [
+                                                                'class' => 'btn btn-outline-primary btn-sm font-weight-normal',
+                                                                'role' => 'modal-remote',
+                                                                'data-confirm' => false, 'data-method' => false, // for overide yii data api
+                                                                'data-request-method' => 'post',
+                                                                'data-toggle' => 'tooltip',
+                                                                'data-confirm-title' => 'Peringatan',
+                                                                'data-confirm-message' => 'Apakah anda yakin ingin memproses data pasien ini ???'
+                                                            ]
+                                                        )  : '<span class="label label-danger"> - </span>' ?>
+                                            </div>
                                             <div class="media-title">
                                                 <?= $waktu->refWaktu->nama ?>
                                             </div>
@@ -206,13 +209,13 @@ CrudAsset::register($this);
                                                                     } else if ($val->kode == 'LN') {
                                                                         $icon = 'fas fa-burger';
                                                                     }
-                                                                    if ($val->getIsDataTaSisaMakanan($value->id_pasien, $waktu->id_waktu) != null) {
+                                                                    if ($val->getIsDataTaSisaMakanan($value->id_pasien, $waktu->id) != null) {
                                                                         $check = '<i class="fas fa-check text-success"></i>';
                                                                     }
                                                                 ?>
                                                         <?= Html::a(
                                                                         $check . ' <i class="' . $icon . '"></i> ' . $val->kode . '-' . $val->nama . '',
-                                                                        ['proses-pilih-makanan', 'id_pasien' => $value->id_pasien, 'id_waktu' => $waktu->id_waktu, 'id_jenis_makanan' => $val->id],
+                                                                        ['proses-pilih-makanan', 'id_pasien' => $value->id_pasien, 'id_waktu_makan' => $waktu->id, 'id_jenis_makanan' => $val->id],
                                                                         [
                                                                             'class' => 'dropdown-item has-icon font-weight-normal',
                                                                             'role' => 'modal-remote',

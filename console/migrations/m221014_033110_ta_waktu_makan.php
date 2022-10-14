@@ -3,22 +3,21 @@
 use yii\db\Migration;
 
 /**
- * Class m221009_031538_ta_skor_makanan
+ * Class m221014_033110_ta_waktu_makan
  */
-class m221009_031538_ta_skor_makanan extends Migration
+class m221014_033110_ta_waktu_makan extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('ta_skor_makanan', [
+        $this->createTable('ta_waktu_makan', [
             'id' => $this->primaryKey(),
             'id_pasien' => $this->tinyInteger(),
-            'id_waktu_makan' => $this->tinyInteger(),
-            'jumlah' => $this->integer(),
-            'persentasi_skor' => $this->float(),
-            'keterangan_skor' => $this->string(255),
+            'id_waktu' => $this->tinyInteger(),
+            'jenis_diet' => $this->string(255),
+            'tanggal' => $this->date(),
         ]);
     }
 
@@ -27,7 +26,7 @@ class m221009_031538_ta_skor_makanan extends Migration
      */
     public function safeDown()
     {
-        echo "m221009_031538_ta_skor_makanan cannot be reverted.\n";
+        echo "m221014_033110_ta_waktu_makan cannot be reverted.\n";
 
         return false;
     }
@@ -41,7 +40,7 @@ class m221009_031538_ta_skor_makanan extends Migration
 
     public function down()
     {
-        echo "m221009_031538_ta_skor_makanan cannot be reverted.\n";
+        echo "m221014_033110_ta_waktu_makan cannot be reverted.\n";
 
         return false;
     }

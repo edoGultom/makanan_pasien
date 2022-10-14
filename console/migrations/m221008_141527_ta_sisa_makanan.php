@@ -17,6 +17,7 @@ class m221008_141527_ta_sisa_makanan extends Migration
             'id_pasien' => $this->tinyInteger(),
             'id_jenis_makanan' => $this->tinyInteger(),
             'id_sisa_makanan' => $this->tinyInteger(),
+            'id_waktu_makan' => $this->tinyInteger(),
             'nilai' => $this->integer(),
             'dikalikan' => $this->tinyInteger(),
         ]);

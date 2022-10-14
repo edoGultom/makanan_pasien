@@ -31,7 +31,9 @@ class TaSisaMakanan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['id_sisa_makanan', 'required', 'message' => 'Silahkan Isi Kategori.'],
             [['id_pasien', 'id_jenis_makanan', 'id_sisa_makanan', 'id_waktu_makan', 'nilai', 'dikalikan'], 'integer'],
+            ['nilai', 'number', 'max' => 4, 'min' => 0, 'tooBig' => 'Nilai max "4".', 'tooSmall' => 'Nilai min "0"']
         ];
     }
 

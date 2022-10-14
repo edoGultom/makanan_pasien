@@ -32,8 +32,8 @@ $no = 1;
             <td><?= $data->pasien->siklus ?></td>
             <td><?= $data->jenis_diet ?></td>
             <td><?= $data->pasien->ruangan ?></td>
-            <td><?= $data->taSkorMakanPasien->persentasi_skor . ' % ' ?></td>
-            <td><?= $data->taSkorMakanPasien->keterangan_skor ?></td>
+            <td><?= ($data->taSkorMakanPasien) ? $data->taSkorMakanPasien->persentasi_skor . ' % '  : '' ?></td>
+            <td><?= ($data->taSkorMakanPasien) ? $data->taSkorMakanPasien->keterangan_skor : ''  ?></td>
         </tr>
         <?php
         }

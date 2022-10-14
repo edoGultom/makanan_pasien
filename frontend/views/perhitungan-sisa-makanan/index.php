@@ -40,18 +40,18 @@ CrudAsset::register($this);
                 </h1>
             </div>
             <div>
-                <?php
-                //  ($isCetak) ?
-                //     Html::a(
-                //         'Export Data',
-                //         ['export'],
-                //         [
-                //             'class' => 'btn btn-lg btn-success font-weight-normal',
-                //             'data-pjax' => 0,
-                //             'target' => '_blank'
-                //         ]
-                //     )
-                //     : ''
+                <?=
+                ($isCetak) ?
+                    Html::a(
+                        'Export Data Pasien',
+                        ['export'],
+                        [
+                            'class' => 'btn btn-lg btn-success font-weight-normal',
+                            'data-pjax' => 0,
+                            'target' => '_blank'
+                        ]
+                    )
+                    : ''
                 ?>
             </div>
         </div>

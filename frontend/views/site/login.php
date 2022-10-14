@@ -74,7 +74,7 @@ $password =  json_encode(substr(strrchr(get_class($model), '\\'), 1) . '[passwor
         <div class="absolute-bottom-left index-2">
             <div class="text-light p-5 pb-2">
                 <div class="mb-5 pb-3">
-                    <h1 class="mb-2 display-4 font-weight-bold">E - Monev Untuk Gizi</h1>
+                    <h1 class="mb-2 display-4 font-weight-bold">E - Monev Unit Gizi</h1>
                     <h5 class="font-weight-normal text-muted-transparent">
                 </div>
 

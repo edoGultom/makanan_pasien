@@ -136,15 +136,14 @@ CrudAsset::register($this);
                 <div class="profile-widget-name"><?= $value->nama ?><div class="text-muted d-inline font-weight-normal">
                         <div class="slash"></div>
                         <?= Yii::$app->formatter->asDate($value->tgl_lahir) ?>
-                    </div>
-
-                    <p>
-                        <button class="btn btn-primary" type="button" data-toggle="collapse"
+                        <div class="slash"></div>
+                        <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse"
                             data-target="#collapseExample-<?= $value->id_pasien ?>" aria-expanded="false"
                             aria-controls="collapseExample-<?= $value->id_pasien ?>">
                             Lihat Detail
                         </button>
-                    </p>
+                    </div>
+
                     <div class="collapse" id="collapseExample-<?= $value->id_pasien ?>">
                         <div class="summary">
                             <!-- <div class="summary-info">
@@ -161,10 +160,12 @@ CrudAsset::register($this);
                                         (<?= $value->countTaWaktuMakanPasien ?> Items)
                                     </span>
                                 </h6>
+
                                 <ul class="list-unstyled list-unstyled-border">
                                     <?php
                                         foreach ($value->dataTaWaktuMakanPasien as $key => $waktu) :
                                         ?>
+
                                     <li class="media">
                                         <div class="media-body">
                                             <div class="media-right">
@@ -182,13 +183,24 @@ CrudAsset::register($this);
                                                             ]
                                                         )  : '<span class="label label-danger"> - </span>' ?>
                                             </div>
+
                                             <div class="media-title">
                                                 <?= $waktu->refWaktu->nama ?>
                                             </div>
                                             <div class="text-muted text-small">
                                                 Jenis Diet
                                                 <div class="bullet"></div> <?= $waktu->jenis_diet ?>
+                                                <div>
+                                                    <?php
+                                                            foreach ($waktu->taSisaMakan as $ket) {
+                                                            ?>
+                                                    <?= $ket->jenisMakanan->nama . ' -> ' . $ket->sisaMakanan->keterangan . ' -> ' . $ket->nilai ?>
+                                                    <div class="bullet"></div>
 
+                                                    <?php
+                                                            }
+                                                            ?>
+                                                </div>
                                                 <div class="filter-dropdown">
                                                     <button type="button" class="btn btn-success btn-sm dropdown-toggle"
                                                         data-toggle="dropdown" aria-haspopup="true"

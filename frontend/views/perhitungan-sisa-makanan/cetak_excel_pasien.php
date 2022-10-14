@@ -9,6 +9,7 @@ $no = 1;
             <td>NAMA PASIEN</td>
             <td>NO RM</td>
             <td>TANGGAL LAHIR</td>
+            <td>TANGGAL</td>
             <td>WAKTU MAKAN</td>
             <td>SIKLUS</td>
             <td>JENIS DIET</td>
@@ -26,6 +27,7 @@ $no = 1;
             <td><?= $data->pasien->nama ?></td>
             <td><?= $data->pasien->no_rm ?></td>
             <td><?= Yii::$app->formatter->asDate($data->pasien->tgl_lahir) ?></td>
+            <td><?= Yii::$app->formatter->asDate($data->tanggal) ?></td>
             <td><?= $data->refWaktu->nama ?></td>
             <td><?= $data->pasien->siklus ?></td>
             <td><?= $data->jenis_diet ?></td>

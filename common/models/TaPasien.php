@@ -72,4 +72,8 @@ class TaPasien extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TaWaktuMakan::className(), ['id_pasien' => 'id_pasien']);
     }
+    public function getIsPasienSkor()
+    {
+        return $this->hasOne(TaSkorMakanan::className(), ['id_pasien' => 'id_pasien']);
+    }
 }

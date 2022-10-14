@@ -73,10 +73,10 @@ class PerhitunganSisaMakananController extends Controller
 
         $persentasi = ($total / ($jumlahJenisMenu * 5) * 100);
 
-        $TaSkorMakanan = TaSkorMakanan::find()->where(['id_pasien' => $id_pasien])->one();
-        if (!isset($TaSkorMakanan)) {
-            $TaSkorMakanan = new TaSkorMakanan();
-        }
+        // $TaSkorMakanan = TaSkorMakanan::find()->where(['id_pasien' => $id_pasien])->one();
+        // if (!isset($TaSkorMakanan)) {
+        $TaSkorMakanan = new TaSkorMakanan();
+        // }
         $TaSkorMakanan->id_pasien = $id_pasien;
         $TaSkorMakanan->jumlah = $jumlah;
         $TaSkorMakanan->id_waktu_makan = $id_waktu_makan;
@@ -109,6 +109,21 @@ class PerhitunganSisaMakananController extends Controller
         header("Cache-Control: private", false);
 
         return $this->renderPartial('cetak_excel', [
+            'model' => $model,
+        ]);
+    }
+    public function actionExportPasien($id_pasien)
+    {
+        $model = TaWaktuMakan::find()->where(['id_pasien' => $id_pasien])->all();
+        $filename = 'Data-' . Date('YmdGis') . '-rekap-pasien-.xls';
+        header("Content-Disposition: attachment; filename=\".$filename\"");
+        header("Cache-Control: max-age=0");
+        header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Cache-Control: private", false);
+
+        return $this->renderPartial('cetak_excel_pasien', [
             'model' => $model,
         ]);
     }

@@ -67,4 +67,12 @@ class TaWaktuMakan extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TaSisaMakanan::className(), ['id_pasien' => 'id_pasien', 'id_waktu_makan' => 'id']);
     }
+    public function getPasien()
+    {
+        return $this->hasOne(TaPasien::className(), ['id_pasien' => 'id_pasien']);
+    }
+    public function getTaSkorMakanPasien()
+    {
+        return $this->hasOne(TaSkorMakanan::className(), ['id_pasien' => 'id_pasien', 'id_waktu_makan' => 'id']);
+    }
 }

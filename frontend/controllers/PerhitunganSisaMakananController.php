@@ -97,9 +97,11 @@ class PerhitunganSisaMakananController extends Controller
             return $this->redirect(['index']);
         }
     }
-    public function actionExport()
+    public function actionExportAll()
     {
-        $model = TaSkorMakanan::find()->all();
+        $model = TaWaktuMakan::find()->orderBy([
+            'id_pasien' => SORT_ASC
+        ])->all();
         $filename = 'Data-' . Date('YmdGis') . '-rekap-pasien-.xls';
         header("Content-Disposition: attachment; filename=\".$filename\"");
         header("Cache-Control: max-age=0");
@@ -108,7 +110,7 @@ class PerhitunganSisaMakananController extends Controller
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header("Cache-Control: private", false);
 
-        return $this->renderPartial('cetak_excel', [
+        return $this->renderPartial('cetak_excel_all', [
             'model' => $model,
         ]);
     }

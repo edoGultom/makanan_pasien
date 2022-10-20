@@ -30,38 +30,36 @@ $this->registerJs($js);
 
 CrudAsset::register($this);
 ?>
-
+<?php Pjax::begin([
+    'id' => 'site-perhitungan',
+]); ?>
 <section class="section">
     <div class="section-header">
-        <div class="d-flex flex-row justify-content-between align-items-center">
-            <div>
+        <div class="d-flex flex-row justify-content-end">
+            <div class="mr-auto p-2">
                 <h1 class="mr-5">
                     <?= $this->title ?>
                 </h1>
             </div>
-            <div>
-                <?php
-                // ($isCetak) ?
-                //     Html::a(
-                //         'Export Data Pasien',
-                //         ['export'],
-                //         [
-                //             'class' => 'btn btn-lg btn-success font-weight-normal',
-                //             'data-pjax' => 0,
-                //             'target' => '_blank'
-                //         ]
-                //     )
-                //     : ''
+            <div class="p-2">
+                <?= ($isCetak) ?
+                    Html::a(
+                        '<i class="fas fa-file-excel"></i> Export Data Pasien',
+                        ['export-all'],
+                        [
+                            'class' => 'btn btn-outline-success btn-md font-weight-normal',
+                            'data-pjax' => 0,
+                            'target' => '_blank'
+                        ]
+                    )
+                    : ''
                 ?>
             </div>
         </div>
-
     </div>
 </section>
 
-<?php Pjax::begin([
-    'id' => 'site-perhitungan',
-]); ?>
+
 <div class="row">
 
     <?php
@@ -138,7 +136,7 @@ CrudAsset::register($this);
                         <div class="slash"></div>
                         <?= Yii::$app->formatter->asDate($value->tgl_lahir) ?>
 
-                        <?= ($value->countTaWaktuMakanPasien > 1) ? '<div class="slash"></div>  <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse"
+                        <?= ($value->countTaWaktuMakanPasien > 0) ? '<div class="slash"></div>  <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse"
                             data-target="#collapseExample-' . $value->id_pasien . '" aria-expanded="false"
                         aria-controls="collapseExample-' . $value->id_pasien . '">
                         Lihat Detail
@@ -162,16 +160,18 @@ CrudAsset::register($this);
                                         <span class="text-muted">
                                             (<?= $value->countTaWaktuMakanPasien ?> Items)
                                         </span>
-                                        <?= ($value->isPasienSkor) ? '<div class="slash"></div>' . Html::a(
-                                                '<i class="fas fa-file-excel"></i> Export',
-                                                ['export-pasien', 'id_pasien' => $value->id_pasien],
-                                                [
-                                                    'class' => 'btn btn-outline-success btn-sm font-weight-normal',
-                                                    'data-pjax' => '0',
-                                                    'target' => '_blank',
+                                        <?php
+                                            //  ($value->isPasienSkor) ? '<div class="slash"></div>' . Html::a(
+                                            //     '<i class="fas fa-file-excel"></i> Export',
+                                            //     ['export-pasien', 'id_pasien' => $value->id_pasien],
+                                            //     [
+                                            //         'class' => 'btn btn-outline-success btn-sm font-weight-normal',
+                                            //         'data-pjax' => '0',
+                                            //         'target' => '_blank',
 
-                                                ]
-                                            ) : '' ?>
+                                            //     ]
+                                            // ) : '' 
+                                            ?>
                                     </h6>
 
 

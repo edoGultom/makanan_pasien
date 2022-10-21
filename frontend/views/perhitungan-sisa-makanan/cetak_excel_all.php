@@ -24,14 +24,14 @@ $no = 1;
 
         ?>
         <tr>
-            <td><?= $data->pasien->nama ?></td>
-            <td><?= $data->pasien->no_rm ?></td>
-            <td><?= Yii::$app->formatter->asDate($data->pasien->tgl_lahir) ?></td>
-            <td><?= Yii::$app->formatter->asDate($data->tanggal) ?></td>
-            <td><?= $data->refWaktu->nama ?></td>
-            <td><?= $data->pasien->siklus ?></td>
+            <td><?= ($data->pasien) ? $data->pasien->nama : '' ?></td>
+            <td><?= ($data->pasien) ? $data->pasien->no_rm : '' ?></td>
+            <td><?= ($data->pasien) ? Yii::$app->formatter->asDate($data->pasien->tgl_lahir)  : '' ?></td>
+            <td><?= ($data->pasien) ? Yii::$app->formatter->asDate($data->tanggal)   : '' ?></td>
+            <td><?= ($data->refWaktu) ? $data->refWaktu->nama : ''  ?></td>
+            <td><?= ($data->pasien) ? $data->pasien->siklus : ''  ?></td>
             <td><?= $data->jenis_diet ?></td>
-            <td><?= $data->pasien->ruangan ?></td>
+            <td><?= ($data->pasien) ? $data->pasien->ruangan : '' ?></td>
             <td><?= ($data->taSkorMakanPasien) ? $data->taSkorMakanPasien->persentasi_skor . ' % '  : '' ?></td>
             <td><?= ($data->taSkorMakanPasien) ? $data->taSkorMakanPasien->keterangan_skor : ''  ?></td>
         </tr>
